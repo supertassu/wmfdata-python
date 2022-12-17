@@ -83,7 +83,12 @@ def load_csv(
 
     create_table_cmd = """
     CREATE TABLE {db_name}.{table_name} ({field_spec})
-    ROW FORMAT DELIMITED FIELDS TERMINATED BY "{sep}"
+    ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
+    WITH SERDEPROPERTIES (
+        'separatorChar' = ',',
+        'quoteChar' = '"',
+        'escapeChar' = '\\\\'
+    )
     STORED AS TEXTFILE
     """
 
